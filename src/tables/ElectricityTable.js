@@ -1,10 +1,9 @@
 import { Table, Popconfirm, Space, Button } from 'antd';
-import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import getMonthName from "../Utils"
 import { BsSunFill, BsMoon } from 'react-icons/bs';
 
 function getDayNightValue(text, index) {
-    console.log(index)
     if (index % 2 === 0) {
         return <Space size="large">
             <BsSunFill style={{ color: 'yellow' }} />
