@@ -1,5 +1,6 @@
 import { Table, Popconfirm, Space, Button } from 'antd';
 import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import getMonthName from "../Utils"
 const dataSource = [
     {
         id: 1,
@@ -44,23 +45,24 @@ const dataSource = [
 ];
 const columns = [
     {
-        title: 'Month',
+        title: 'Mois',
         dataIndex: 'month',
         key: 'month',
+        render: text => {return getMonthName(text)}
     },
     {
-        title: 'Year',
+        title: 'Année',
         dataIndex: 'year',
         key: 'year'
     },
     {
-        title: 'Day value',
+        title: 'Jour',
         dataIndex: 'dayValue',
         key: 'dayValue',
         render: text => <a>{text}</a>
     },
     {
-        title: 'Night value',
+        title: 'Nuit',
         dataIndex: 'nightValue',
         key: 'nightValue',
         render: text => <a>{text}</a>
@@ -76,7 +78,7 @@ const columns = [
         },
     },
     {
-        title: 'Action',
+        title: 'Actions',
         key: 'action',
         render: (text, record) => (
             <Space size="middle">

@@ -1,5 +1,23 @@
 import { Table, Popconfirm, Space, Button } from 'antd';
 import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import getMonthName from "../Utils"
+import { BsSunFill, BsMoon } from 'react-icons/bs';
+
+function getDayNightValue(text, index) {
+    console.log(index)
+    if (index % 2 === 0) {
+        return <Space size="large">
+            <BsSunFill style={{ color: 'yellow' }} />
+            <a>{text}</a>
+        </Space>
+    }
+    else {
+        return <Space size="large">
+            <BsMoon />
+            <a>{text}</a>
+        </Space>
+    }
+}
 const dataSource = [
     {
         id: 1,
@@ -48,8 +66,7 @@ const dataSource = [
     },
     {
         id: 2,
-        dayValue: 5.131,
-        nightValue: 4.758,
+        value: 5.131,
         year: 2021,
         month: 11,
         statementDate: new Date(2021, 12, 2),
@@ -77,36 +94,45 @@ const dataSource = [
 ];
 const columns = [
     {
-        title: 'Month',
+        title: '',
         dataIndex: 'month',
         key: 'month',
+        render: (text, index) => {
+            return <b>{getMonthName(text)}</b>
+        },
         onCell: (_, index) => {
-            return { rowSpan: 2 };
+            if (index % 2 === 0) {
+                return { rowSpan: 2 }
+            }
+            return { rowSpan: 0 };
         }
     },
     {
-        title: 'Year',
-        dataIndex: 'year',
-        key: 'year',
-    },
-    {
-        title: 'Value',
+        title: '2020',
         dataIndex: 'value',
         key: 'value',
-        render: text => <a>{text}</a>
-    },
-    {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        render: (type, record) => {
-            return <Space size="large">
-                <ThunderboltTwoTone twoToneColor="#fde047" />
-            </Space>
+        render: (text, _, index) => {
+            return getDayNightValue(text, index);
         },
     },
     {
-        title: 'Action',
+        title: '2021',
+        dataIndex: 'value',
+        key: 'value',
+        render: (text, _, index) => {
+            return getDayNightValue(text, index);
+        },
+    },
+    {
+        title: '2022',
+        dataIndex: 'value',
+        key: 'value',
+        render: (text, _, index) => {
+            return getDayNightValue(text, index);
+        },
+    },
+    {
+        title: 'Actions',
         key: 'action',
         render: (text, record) => (
             <Space size="middle">
