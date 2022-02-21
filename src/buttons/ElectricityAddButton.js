@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Space, Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { PlusOutlined, FireFilled, ThunderboltFilled } from '@ant-design/icons';
 import ElectricityAddForm from '../forms/ElectricityAddForm';
 function AddElectricityButton() {
@@ -25,9 +25,14 @@ function AddElectricityButton() {
 
   return (
     <>
-      <Button icon={<PlusOutlined />} type="primary" onClick={showModal}>Ajouter un relevé <ThunderboltFilled /></Button>
+      <Button icon={<PlusOutlined />} 
+        shape="round"
+        type="primary" 
+        onClick={showModal}>
+        Ajouter un relevé <ThunderboltFilled />
+      </Button>
       <Modal
-        title="Ajout d'un relevé  d'index"
+        title="Ajout d'un relevé d'index"
         okText="Ajouter"
         cancelText="Annuler"
         visible={visible}

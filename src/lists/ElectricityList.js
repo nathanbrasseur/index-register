@@ -1,54 +1,14 @@
-import { Table, Popconfirm, Space, Button } from 'antd';
-import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import getMonthName from "../Utils"
-const dataSource = [
-    {
-        id: 1,
-        dayValue:  5.131,
-        nightValue: 4.758,
-        year: 2021,
-        month: 9,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'electricity'
-    },
-    {
-        id: 2,
-        dayValue: 5.131,
-        nightValue: 4.758,
-        year: 2021,
-        month: 10,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'electricity'
-    },
-    {
-        id: 3,
-        dayValue: 5.264,
-        nightValue: 2.264,
-        year: 2021,
-        month: 11,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'electricity'
-    },
-    {
-        id: 4,
-        dayValue: 2.264,
-        nightValue: 5.264,
-        year: 2021,
-        month: 12,
-        statementDate: new Date(2022, 1, 2),
-        isSimulated: false,
-        type: 'electricity'
-    }
-];
+import { useState, useEffect } from 'react';
+import { Table, Popconfirm, Space, Button, Typography } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import * as Utils from "../Utils"
+const { Text } = Typography;
 const columns = [
     {
         title: 'Mois',
         dataIndex: 'month',
         key: 'month',
-        render: text => {return getMonthName(text)}
+        render: text => { return <b>{Utils.getMonthName(text)}</b> }
     },
     {
         title: 'Année',
@@ -68,23 +28,13 @@ const columns = [
         render: text => <a>{text}</a>
     },
     {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        render: (type, record) => {
-            return <Space size="large">
-                <ThunderboltTwoTone twoToneColor="#fde047" />
-            </Space>
-        },
-    },
-    {
         title: 'Actions',
         key: 'action',
         render: (text, record) => (
             <Space size="middle">
-                <Button type="primary" shape="circle" icon={<EditOutlined />}/>
+                <Button type="primary" shape="circle" icon={<EditOutlined />} />
                 <Popconfirm title="Are you sure delete this index?" okText="Yes" cancelText="No">
-                    <Button type="danger" shape="circle" icon={<DeleteOutlined />}/>
+                    <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
                 </Popconfirm>
             </Space>
         ),
@@ -92,7 +42,48 @@ const columns = [
 ];
 
 export default function ElectricityList() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        getData();
+
+        async function getData() {
+            const response = await fetch(Utils.API_GET_ELEC);
+            const results = await response.json();
+            setData(results);
+        }
+    }, []);
     return (
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
+        <Table
+            dataSource={data}
+            columns={columns}
+            pagination={false}
+            
+            summary={pageData => {
+                let totalDayValues = 0;
+                let totalNightValues = 0;
+        
+                pageData.forEach(({ dayValue, nightValue }) => {
+                  totalDayValues += dayValue;
+                  totalNightValues += nightValue;
+                });
+        
+                return (
+                  <>
+                    <Table.Summary.Row>
+                      <Table.Summary.Cell><Text italic strong type='secondary'>Total</Text></Table.Summary.Cell>
+                      <Table.Summary.Cell></Table.Summary.Cell>
+                      <Table.Summary.Cell>
+                        <Text italic strong type='secondary'>{totalDayValues/pageData.length}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell>
+                        <Text italic strong type='secondary'>{totalNightValues/pageData.length}</Text>
+                      </Table.Summary.Cell>
+                      <Table.Summary.Cell></Table.Summary.Cell>
+                    </Table.Summary.Row>
+                  </>
+                );
+              }}
+        />
     );
 }

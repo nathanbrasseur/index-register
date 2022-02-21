@@ -1,72 +1,27 @@
+import { useState, useEffect } from 'react';
 import { Table, Popconfirm, Space, Button } from 'antd';
-import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-const dataSource = [
-    {
-        id: 1,
-        value: 4.758,
-        year: 2021,
-        month: 9,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'water'
-    },
-    {
-        id: 2,
-        value: 5.131,
-        year: 2021,
-        month: 10,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'water'
-    },
-    {
-        id: 3,
-        value: 5.264,
-        year: 2021,
-        month: 11,
-        statementDate: new Date(2021, 12, 2),
-        isSimulated: false,
-        type: 'water'
-    },
-    {
-        id: 4,
-        value: 2.264,
-        year: 2021,
-        month: 12,
-        statementDate: new Date(2022, 1, 2),
-        isSimulated: false,
-        type: 'water'
-    }
-];
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import * as Utils from "../Utils"
 const columns = [
     {
-        title: 'Month',
+        title: 'Mois',
         dataIndex: 'month',
         key: 'month',
+        render: text => {return <b>{Utils.getMonthName(text)}</b>}
     },
     {
-        title: 'Year',
+        title: 'Année',
         dataIndex: 'year',
         key: 'year'
     },
     {
-        title: 'Value',
+        title: 'Relevé',
         dataIndex: 'value',
         key: 'value',
         render: text => <a>{text}</a>
     },
     {
-        title: 'Type',
-        dataIndex: 'type',
-        key: 'type',
-        render: (type, record) => {
-            return <Space size="large">
-                <FireTwoTone twoToneColor="#93c5fd" />
-            </Space>
-        },
-    },
-    {
-        title: 'Action',
+        title: 'Actions',
         key: 'action',
         render: (text, record) => (
             <Space size="middle">
@@ -80,7 +35,18 @@ const columns = [
 ];
 
 export default function WaterList() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        getData();
+        
+        async function getData() {
+          const response = await fetch(Utils.API_GET_WATER);
+          const results = await response.json();
+          setData(results) ;
+        }
+      }, []);
     return (
-        <Table dataSource={dataSource} columns={columns} pagination={false} />
+        <Table dataSource={data} columns={columns} pagination={false} />
     );
 }

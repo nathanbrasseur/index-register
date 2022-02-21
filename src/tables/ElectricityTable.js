@@ -1,6 +1,6 @@
 import { Table, Popconfirm, Space, Button } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import getMonthName from "../Utils"
+import * as Utils from "../Utils"
 import { BsSunFill, BsMoon } from 'react-icons/bs';
 
 function getDayNightValue(text, index) {
@@ -97,7 +97,7 @@ const columns = [
         dataIndex: 'month',
         key: 'month',
         render: (text, index) => {
-            return <b>{getMonthName(text)}</b>
+            return <b>{Utils.getMonthName(text)}</b>
         },
         onCell: (_, index) => {
             if (index % 2 === 0) {

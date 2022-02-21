@@ -1,5 +1,6 @@
 import { Table, Popconfirm, Space, Button } from 'antd';
 import { FireTwoTone, ThunderboltTwoTone, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import * as Utils from "../Utils"
 const dataSource = [
     {
         id: 1,

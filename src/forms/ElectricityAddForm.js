@@ -1,15 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Form,
-    Input,
-    Button,
-    Radio,
     Select,
-    Cascader,
     DatePicker,
     InputNumber,
-    TreeSelect,
-    Switch,
 } from 'antd';
 
 export default function ElectricityAddForm() {
