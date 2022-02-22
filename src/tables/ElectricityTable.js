@@ -130,18 +130,18 @@ const columns = [
             return getDayNightValue(text, index);
         },
     },
-    {
-        title: 'Actions',
-        key: 'action',
-        render: (text, record) => (
-            <Space size="middle">
-                <Button type="primary" shape="circle" icon={<EditOutlined />} />
-                <Popconfirm title="Are you sure delete this index?" okText="Yes" cancelText="No">
-                    <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
-                </Popconfirm>
-            </Space>
-        ),
-    },
+    // {
+    //     title: 'Actions',
+    //     key: 'action',
+    //     render: (text, record) => (
+    //         <Space size="middle">
+    //             <Button type="primary" shape="circle" icon={<EditOutlined />} />
+    //             <Popconfirm title="Are you sure delete this index?" okText="Yes" cancelText="No">
+    //                 <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
+    //             </Popconfirm>
+    //         </Space>
+    //     ),
+    // },
 ];
 
 export default function ElectricityTable() {

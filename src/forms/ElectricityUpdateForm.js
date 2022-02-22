@@ -7,15 +7,12 @@ import {
 } from 'antd';
 import moment from 'moment';
 
-export default function ElectricityAddForm() {
-    const defaultMonthValue = '' + moment().month()
+export default function ElectricityUpdateForm() {
     return (
-        <Form 
-        layout="horizontal" 
-        labelCol={{ span: 12 }}
-        wrapperCol={{ span: 14 }}
-        // layout="vertical" 
-        requiredMark="true">
+        <Form
+            layout="horizontal" 
+            labelCol={{ span: 12 }}
+            wrapperCol={{ span: 14 }}>
             <Form.Item
                 label="Valeur du compteur de jour"
                 required
@@ -44,19 +41,10 @@ export default function ElectricityAddForm() {
                 />
             </Form.Item>
             <Form.Item
-                rules={[{ required: true, message: 'Sélectionnez la date de relevé' }]}
-                required
-                label="Date de relevé">
-                <DatePicker
-                    defaultValue={moment()} 
-                    format={'DD/MM/YYYY'}
-                 />
-            </Form.Item>
-            <Form.Item
-                required
                 rules={[{ required: true, message: 'Sélectionnez le mois' }]}
-                label="Mois du relevé">
-                <Select defaultValue={defaultMonthValue}>
+                label="Mois du relevé"
+                required>
+                <Select>
                     <Select.Option value="1">Janvier</Select.Option>
                     <Select.Option value="2">Février</Select.Option>
                     <Select.Option value="3">Mars</Select.Option>
@@ -70,6 +58,15 @@ export default function ElectricityAddForm() {
                     <Select.Option value="11">Novembre</Select.Option>
                     <Select.Option value="12">Décembre</Select.Option>
                 </Select>
+            </Form.Item>
+            <Form.Item
+                rules={[{ required: true, message: 'Sélectionnez la date de relevé' }]}
+                label="Date de relevé"
+                required>
+                <DatePicker
+                    defaultValue={moment()} 
+                    format={'DD/MM/YYYY'}
+                 />
             </Form.Item>
         </Form>
     );

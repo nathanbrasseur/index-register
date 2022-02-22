@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
 import { Table, Popconfirm, Space, Button, Typography } from 'antd';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { useState, useEffect } from 'react';
 import * as Utils from "../Utils"
+import EditElectricityButton from '../buttons/ElectricityEditButton';
+import RemoveElectricityButton from '../buttons/ElectricityRemoveButton';
 const { Text } = Typography;
 const columns = [
     {
@@ -16,26 +17,36 @@ const columns = [
         key: 'year'
     },
     {
-        title: 'Jour',
+        title: 'Relevé jour',
         dataIndex: 'dayValue',
         key: 'dayValue',
         render: text => <a>{text}</a>
     },
     {
-        title: 'Nuit',
+        title: 'Relevé nuit',
         dataIndex: 'nightValue',
         key: 'nightValue',
         render: text => <a>{text}</a>
     },
     {
-        title: 'Actions',
+        title: 'Conso. jour',
+        dataIndex: 'dayUsage',
+        key: 'dayUsage',
+        render: text => <a>{text}</a>
+    },
+    {
+        title: 'Conso. nuit',
+        dataIndex: 'nightUsage',
+        key: 'nightUsage',
+        render: text => <a>{text}</a>
+    },
+    {
+        title: '',
         key: 'action',
         render: (text, record) => (
             <Space size="middle">
-                <Button type="primary" shape="circle" icon={<EditOutlined />} />
-                <Popconfirm title="Are you sure delete this index?" okText="Yes" cancelText="No">
-                    <Button type="danger" shape="circle" icon={<DeleteOutlined />} />
-                </Popconfirm>
+                <EditElectricityButton />
+                <RemoveElectricityButton />
             </Space>
         ),
     },
@@ -58,32 +69,36 @@ export default function ElectricityList() {
             dataSource={data}
             columns={columns}
             pagination={false}
-            
             summary={pageData => {
                 let totalDayValues = 0;
                 let totalNightValues = 0;
-        
-                pageData.forEach(({ dayValue, nightValue }) => {
-                  totalDayValues += dayValue;
-                  totalNightValues += nightValue;
+
+                pageData.forEach(({ dayUsage, nightUsage }) => {
+                    totalDayValues += dayUsage;
+                    totalNightValues += nightUsage;
                 });
-        
+                console.log('pageData.length : ' + pageData.length)
+                const averageDay = (totalDayValues / pageData.length).toFixed(3);
+                const averageNight = (totalNightValues / pageData.length).toFixed(3);
+
                 return (
-                  <>
-                    <Table.Summary.Row>
-                      <Table.Summary.Cell><Text italic strong type='secondary'>Total</Text></Table.Summary.Cell>
-                      <Table.Summary.Cell></Table.Summary.Cell>
-                      <Table.Summary.Cell>
-                        <Text italic strong type='secondary'>{totalDayValues/pageData.length}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell>
-                        <Text italic strong type='secondary'>{totalNightValues/pageData.length}</Text>
-                      </Table.Summary.Cell>
-                      <Table.Summary.Cell></Table.Summary.Cell>
-                    </Table.Summary.Row>
-                  </>
+                    <>
+                        <Table.Summary.Row>
+                            <Table.Summary.Cell><Text italic strong type='secondary'>Moyenne</Text></Table.Summary.Cell>
+                            <Table.Summary.Cell></Table.Summary.Cell>
+                            <Table.Summary.Cell></Table.Summary.Cell>
+                            <Table.Summary.Cell></Table.Summary.Cell>
+                            <Table.Summary.Cell>
+                                <Text italic strong type='secondary'>{averageDay}</Text>
+                            </Table.Summary.Cell>
+                            <Table.Summary.Cell>
+                                <Text italic strong type='secondary'>{averageNight}</Text>
+                            </Table.Summary.Cell>
+                            <Table.Summary.Cell></Table.Summary.Cell>
+                        </Table.Summary.Row>
+                    </>
                 );
-              }}
+            }}
         />
     );
 }

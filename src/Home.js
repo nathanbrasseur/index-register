@@ -1,5 +1,11 @@
-import { Empty, Space } from 'antd';
+import { Result } from 'antd';
 function Home() {
-    return <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+    return (
+        <Result
+            status="404"
+            title="Non disponible"
+            subTitle="En cours de création"
+        />
+    );
 }
 export default Home;

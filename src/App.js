@@ -22,7 +22,7 @@ export default function App() {
 }
 function ContentLayout() {
     return (
-        <Layout>
+        <Layout className="layout">
             <Header>
                 <MenuNav />
             </Header>
@@ -33,7 +33,6 @@ function ContentLayout() {
         </Layout>
     );
 }
-
 
 function NoMatch() {
     return (

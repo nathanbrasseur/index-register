@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, Modal } from 'antd';
-import { PlusOutlined, ThunderboltFilled } from '@ant-design/icons';
-import ElectricityAddForm from '../forms/ElectricityAddForm';
+import { EditOutlined } from '@ant-design/icons';
+import ElectricityUpdateForm from '../forms/ElectricityUpdateForm';
 
-export default function AddElectricityButton() {
+export default function EditElectricityButton() {
+
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
 
@@ -26,15 +27,10 @@ export default function AddElectricityButton() {
 
   return (
     <>
-      <Button icon={<PlusOutlined />}
-        shape="round"
-        type="primary"
-        onClick={showModal}>
-        Ajouter un relevé <ThunderboltFilled />
-      </Button>
+      <Button type="primary" shape="circle" icon={<EditOutlined />} onClick={showModal} />
       <Modal
-        title="Ajout d'un relevé d'index"
-        okText="Ajouter"
+        title="Modification d'un relevé d'index"
+        okText="Mettre à jour"
         centered
         cancelText="Annuler"
         visible={visible}
@@ -43,7 +39,7 @@ export default function AddElectricityButton() {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <ElectricityAddForm />
+        <ElectricityUpdateForm />
       </Modal>
     </>
   );
